@@ -32,10 +32,7 @@ func CheckEAN13(barcode string) (err error) {
 	sum := 0
 	for i := 0; i < 12; i++ {
 		digit := barcode[i : i+1]
-		intDigit, err := strconv.Atoi(digit)
-		if err != nil {
-			return errors.New(ErrNotNumber)
-		}
+		intDigit, _ := strconv.Atoi(digit)
 		if even {
 			sum += intDigit * 3
 		} else {
@@ -49,10 +46,7 @@ func CheckEAN13(barcode string) (err error) {
 
 	checkSum := roundedSum - sum
 
-	checkDigit, err := strconv.Atoi(barcode[12:13])
-	if err != nil {
-		return errors.New(ErrNotNumber)
-	}
+	checkDigit, _ := strconv.Atoi(barcode[12:13])
 
 	if checkDigit != checkSum {
 		return errors.New(ErrWrongCheckSum)
